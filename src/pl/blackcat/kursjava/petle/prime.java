@@ -1,9 +1,12 @@
 package pl.blackcat.kursjava.petle;
 
-//simple implementation of Sieve of Eratosthenes
-//VER1: Let's start!
-//VER2: delete multiplications of 2 - don't need to check them many times, add counter to compare result with WolframAlpha
-//VER3: checking primes up to sqrt(n)
+/*
+simple implementation of Sieve of Eratosthenes
+VER1: Let's start!
+VER2: delete multiplications of 2 - don't need to check them many times, add counter to compare result with WolframAlpha
+VER3: checking primes up to sqrt(n)
+VER4: code optimization, final version (hopefully)
+*/
 
 import static java.lang.Math.sqrt;
 
@@ -12,24 +15,29 @@ public class prime {
 		//init array + preparations
 		int[] sieve = new int[max + 1];
 		double sqrt_max = sqrt(max);
-		System.out.println(sqrt_max);
 
 		//fill the array
 		for (int i = 2; i <= max; i++)
 			sieve[i] = i;
 
 		//sieve
+		for (int i = 2; i <= sqrt_max ; i++){
+			if (sieve[i] != 0){
+				for (int j = i*2; j <= max; j = j+i) {
+					sieve[j] = 0;
+				}
+			}
+		}
+		/*
 		for (int i = 4; i <= max; i=i+2)
 			sieve[i] = 0;
 		for (int i = 3; i <= sqrt_max; i=i+2) {
 			for (int j = i * 2; j <= max; j = j + i) {
 				sieve[j] = 0;
-/*
-				System.out.print("j= ");
-				System.out.println(j);
-*/
 			}
 		}
+
+		 */
 
 		//print
 		int counter = 0;
@@ -50,7 +58,7 @@ public class prime {
 	}
 
 	public static void main(String[] args) {
-		int max = 50000;
+		int max = 50993;
 		sieve(max);
 
 	}
